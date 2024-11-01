@@ -3,7 +3,8 @@ import requests
 from bs4 import BeautifulSoup as bs
 import re
 import folium
-from pystyle import Colors, Colorate
+from pystyle import Colors, Colorate, Write
+import whois
 
 
 
@@ -99,4 +100,25 @@ def get_info_by_ip(ip):
     except requests.exceptions.ConnectionError:
         print(Colorate.Horizontal(Colors.red_to_yellow, '[!] Check your connection!'.strip()))
 
+def get_whois():
+    domain= input(Colorate.Horizontal(Colors.red_to_yellow, ("Domin : ")))
+    try:
+      domain_info = whois.whois(domain)
+      info = (f"\n"
+              f"  |Information about the site: \n"
+              f"  |Domain: {domain_info.domain_name}\n"
+              f"  |IP address: {domain_info.name_servers}\n"
+              f"  |Registered: {domain_info.creation_date}\n"
+              f"  |Expires: {domain_info.expiration_date}  \n"
+              f"  |Organization: {domain_info.registrant_organization}\n"
+              f"  |Owner: {domain_info.registrant_name}\n"
+              f"  |Address: {domain_info.registrant_address}\n"
+              f"  |Country: {domain_info.registrant_country}\n"
+              f"  |City: {domain_info.registrant_city}\n"
+              f"  |State: {domain_info.registrant_state}\n"
+              f"  |Postal code: {domain_info.registrant_postal_code}\n"
+              f"    ")
+      Write.Print(info + "\n", Colors.blue_to_red, interval=0.004)
+    except Exception as e:
+        print(f"Error: {e}\n")
 
