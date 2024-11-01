@@ -164,11 +164,11 @@ def get_exif(filename):
 
     for i in exif_data.keys():
         if i == "GPSInfo":
-            print(f"{i}: ")
+            Write.Print(f"{i}: ",Colors.red_to_green,interval=0.00000000000000000000000000001,end="\n")
             for x in exif_data[i].keys():
-                print(f"\t{x} : {exif_data[i][x]}")
+                Write.Print(f"\t{x} : {exif_data[i][x]}\n", Colors.red_to_green,interval=0.00000000000000000000000000001)
         else:
-            print(f"{i} : {exif_data[i]}")
+            Write.Print(f"{i} : {exif_data[i]}\n",Colors.red_to_green,interval=0.00000000000000000000000000001)
     lat_ref = "S"
     lat_degrees = exif_data["GPSInfo"]["GPSLatitude"][0]
     lat_minutes = exif_data["GPSInfo"]["GPSLatitude"][1]
