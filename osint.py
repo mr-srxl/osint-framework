@@ -143,7 +143,7 @@ def point_on_map(lat_coordinate, long_coordinate):
 
   my_map.save("loc.html")
 
-  print("Map created successfully! Open location.html in your web browser.")
+  Write.Print("Map created successfully! Open location.html in your web browser.",Colors.red_to_green)
 
 
 def get_exif(filename):
