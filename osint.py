@@ -1,4 +1,8 @@
 import phonenumbers
+import requests
+from bs4 import BeautifulSoup as bs
+import re
+
 
 from phonenumbers import geocoder,carrier,timezone
 def get_phone_number_info(phone_number):
@@ -29,3 +33,43 @@ def get_phone_number_info(phone_number):
         return message
     except Exception as e:
         return str(e)
+
+
+
+
+class EmailExtractor:
+  def __init__(self):
+    pass
+
+  def extract_emails_from_url(self, url):
+    # Handle http/https
+    if 'http' not in url:
+      url = 'https://' + url
+
+    try:
+      response = requests.get(url)
+    except Exception as e:
+      print(f"Error fetching URL: {e}")
+      return
+
+    if response.status_code == 200:
+      text = response.text
+      soup = bs(text, 'html.parser').body
+      emails = re.findall(r'[\w.+-]+@[\w-]+\.[\w.-]+', str(soup))
+      emails_set = set(emails)
+      if emails_set:
+        for email in emails_set:
+          print(email)
+      else:
+        print('No emails found.')
+
+  def extract_emails_from_file(self):
+    file_path = input("Enter file path: ")
+    try:
+      with open(file_path, "r") as file:
+        urls = file.read().splitlines() # Read lines from the file
+        for url in urls:
+          self.extract_emails_from_url(url)
+    except FileNotFoundError:
+      print(f"File not found: {file_path}")
+
