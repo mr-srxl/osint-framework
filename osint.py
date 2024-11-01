@@ -78,8 +78,9 @@ class EmailExtractor:
       print(f"File not found: {file_path}")
 
 
-def get_info_by_ip(ip):
+def get_info_by_ip():
     try:
+        ip = input(Colorate.Horizontal(Colors.red_to_yellow, ("IP : ")))
         response = requests.get(url=f'http://ip-api.com/json/{ip}').json()
         info = {
             'ip': response.get('query'),
