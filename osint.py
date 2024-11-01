@@ -144,3 +144,41 @@ def point_on_map(lat_coordinate, long_coordinate):
   my_map.save("loc.html")
 
   print("Map created successfully! Open location.html in your web browser.")
+
+
+def get_exif(filename):
+    exif_data = {}
+    image = Image.open(filename)
+    info = image._getexif()
+    if info:
+        for tag, value in info.items():
+            decoded = ExifTags.TAGS.get(tag, tag)
+            if decoded == "GPSInfo":
+                gps_data = {}
+                for gps_tag in value:
+                    sub_decoded = ExifTags.GPSTAGS.get(gps_tag, gps_tag)
+                    gps_data[sub_decoded] = value[gps_tag]
+                exif_data[decoded] = gps_data
+            else:
+                exif_data[decoded] = value
+
+    for i in exif_data.keys():
+        if i == "GPSInfo":
+            print(f"{i}: ")
+            for x in exif_data[i].keys():
+                print(f"\t{x} : {exif_data[i][x]}")
+        else:
+            print(f"{i} : {exif_data[i]}")
+    lat_ref = "S"
+    lat_degrees = exif_data["GPSInfo"]["GPSLatitude"][0]
+    lat_minutes = exif_data["GPSInfo"]["GPSLatitude"][1]
+    lat_seconds = exif_data["GPSInfo"]["GPSLatitude"][2]
+    lat_coordinate = - (lat_degrees + (lat_minutes / 60) + (lat_seconds / 3600))
+
+    long_ref = "W"
+    long_degrees = exif_data["GPSInfo"]["GPSLongitude"][0]
+    long_minutes = exif_data["GPSInfo"]["GPSLongitude"][1]
+    long_seconds = exif_data["GPSInfo"]["GPSLongitude"][2]
+    long_coordinate = - (long_degrees + (long_minutes / 60) + (long_seconds / 3600))
+    point_on_map(lat_coordinate, long_coordinate)
+
