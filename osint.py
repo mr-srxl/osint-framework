@@ -129,3 +129,18 @@ def get_whois():
     except Exception as e:
         print(f"Error: {e}\n")
 
+
+
+def point_on_map(lat_coordinate, long_coordinate):
+
+  my_map = folium.Map(location=[lat_coordinate, long_coordinate], zoom_start=10)
+
+  folium.Marker(
+    location=[lat_coordinate, long_coordinate],
+    popup=f"Latitude: {lat_coordinate}\nLongitude: {long_coordinate}",
+    icon=folium.Icon(color="red", icon="location-arrow"),
+  ).add_to(my_map)
+
+  my_map.save("loc.html")
+
+  print("Map created successfully! Open location.html in your web browser.")
