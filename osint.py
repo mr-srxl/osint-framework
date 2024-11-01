@@ -2,6 +2,9 @@ import phonenumbers
 import requests
 from bs4 import BeautifulSoup as bs
 import re
+import folium
+from pystyle import Colors, Colorate
+
 
 
 from phonenumbers import geocoder,carrier,timezone
@@ -74,5 +77,26 @@ class EmailExtractor:
       print(f"File not found: {file_path}")
 
 
+def get_info_by_ip(ip):
+    try:
+        response = requests.get(url=f'http://ip-api.com/json/{ip}').json()
+        info = {
+            'ip': response.get('query'),
+            'country': response.get('country'),
+            'city': response.get('city'),
+            'provider': response.get('isp'),
+            'organization': response.get('org'),
+            'regionName': response.get('regionName'),
+            'postal code': response.get('zip'),
+            'lat': response.get('lat'),
+            'lon': response.get('lon'),
+        }
+        for k, v in info.items():
+            print(Colorate.Horizontal(Colors.red_to_yellow, f'{k} : {v}'.strip()))
+        area = folium.Map(location=[response.get('lat'), response.get('lon')])
+        area.save(f'{response.get("query")}_{response.get("city")}.html')
+
+    except requests.exceptions.ConnectionError:
+        print(Colorate.Horizontal(Colors.red_to_yellow, '[!] Check your connection!'.strip()))
 
 
