@@ -12,7 +12,8 @@ from ipyleaflet import Map, Marker
 import folium
 from ipyleaflet import Map, basemaps, basemap_to_tiles
 from pystyle import Colors, Colorate
-
+#pdf pip install PyPDF2
+from PyPDF2 import PdfReader, PdfWriter
 
 from phonenumbers import geocoder,carrier,timezone
 def get_phone_number_info(phone_number):
@@ -182,3 +183,10 @@ def get_exif(filename):
     long_coordinate = - (long_degrees + (long_minutes / 60) + (long_seconds / 3600))
     point_on_map(lat_coordinate, long_coordinate)
 
+def pdf_metadate():
+    pdf=Write.Input("Path: ",Colors.green,interval=0)
+    reader = PdfReader(pdf)
+    meta = reader.metadata
+    print("File MEtadata:")
+    for i in meta.keys():
+        Write.Print(f"\t{i}: {meta[i]}", Colors.blue_to_purple, interval=0.00000000000000000000000000001, end="\n")
