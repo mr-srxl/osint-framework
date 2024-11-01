@@ -5,7 +5,13 @@ import re
 import folium
 from pystyle import Colors, Colorate, Write
 import whois
-
+import folium as folium
+from IPython import display
+from PIL import Image, ExifTags
+from ipyleaflet import Map, Marker
+import folium
+from ipyleaflet import Map, basemaps, basemap_to_tiles
+from pystyle import Colors, Colorate
 
 
 from phonenumbers import geocoder,carrier,timezone
