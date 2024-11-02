@@ -65,7 +65,6 @@ class EmailExtractor:
         try:
             response = requests.get(url)
         except Exception as e:
-            print(f"Error fetching URL: {e}")
             return
 
         if response.status_code == 200:
@@ -77,7 +76,7 @@ class EmailExtractor:
                 for email in emails_set:
                     print(email)
             else:
-                print('No emails found.')
+                pass
 
     def extract_emails_from_file(self):
         file_path = input("Enter file path: ")
