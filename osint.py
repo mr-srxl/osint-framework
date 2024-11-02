@@ -170,18 +170,17 @@ def get_exif(filename):
                 Write.Print(f"\t{x} : {exif_data[i][x]}\n", Colors.red_to_green,interval=0.00000000000000000000000000001)
         else:
             Write.Print(f"{i} : {exif_data[i]}\n",Colors.red_to_green,interval=0.00000000000000000000000000001)
-    lat_ref = "S"
-    lat_degrees = exif_data["GPSInfo"]["GPSLatitude"][0]
-    lat_minutes = exif_data["GPSInfo"]["GPSLatitude"][1]
-    lat_seconds = exif_data["GPSInfo"]["GPSLatitude"][2]
-    lat_coordinate = - (lat_degrees + (lat_minutes / 60) + (lat_seconds / 3600))
+    if  "GPSInfo" in exif_data.keys():
+        lat_ref = "S"
+        lat_degrees,lat_minutes,lat_seconds = exif_data["GPSInfo"]["GPSLatitude"]
+        lat_coordinate = - (lat_degrees + (lat_minutes / 60) + (lat_seconds / 3600))
 
-    long_ref = "W"
-    long_degrees = exif_data["GPSInfo"]["GPSLongitude"][0]
-    long_minutes = exif_data["GPSInfo"]["GPSLongitude"][1]
-    long_seconds = exif_data["GPSInfo"]["GPSLongitude"][2]
-    long_coordinate = - (long_degrees + (long_minutes / 60) + (long_seconds / 3600))
-    point_on_map(lat_coordinate, long_coordinate)
+        long_ref = "W"
+        long_degrees,long_minutes,long_seconds = exif_data["GPSInfo"]["GPSLongitude"]
+        long_coordinate = - (long_degrees + (long_minutes / 60) + (long_seconds / 3600))
+        point_on_map(lat_coordinate, long_coordinate)
+    else:
+        print("GPS data not found in image.")
 
 def pdf_metadate():
     pdf=Write.Input("Path: ",Colors.green,interval=0)
