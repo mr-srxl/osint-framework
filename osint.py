@@ -142,7 +142,7 @@ def point_on_map(lat_coordinate, long_coordinate):
     icon=folium.Icon(color="red", icon="location-arrow"),
   ).add_to(my_map)
 
-  my_map.save("loc.html")
+  my_map.save("location.html")
 
   Write.Print("Map created successfully! Open location.html in your web browser.",Colors.red_to_green)
 
