@@ -284,7 +284,7 @@ def execute_command(choice):
 while True:
     try:
      Write.Print(banner, Colors.white, interval=0)
-     command = input('\nmr.pwd> ')
+     command = input('\nmr.osint> ')
      execute_command(command)
     except KeyboardInterrupt:
         print("\nGoodbye!")
