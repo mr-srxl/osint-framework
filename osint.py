@@ -109,6 +109,7 @@ def get_info_by_ip():
             print(Colorate.Horizontal(Colors.red_to_yellow, f'{k} : {v}'.strip()))
         area = folium.Map(location=[response.get('lat'), response.get('lon')])
         area.save(f'{response.get("query")}_{response.get("city")}.html')
+        Write.Print("Map created successfully! Open"+f'{response.get("query")}_{response.get("city")}.html in your web browser.', Colors.red_to_yellow)
 
     except requests.exceptions.ConnectionError:
         print(Colorate.Horizontal(Colors.red_to_yellow, '[!] Check your connection!'.strip()))
