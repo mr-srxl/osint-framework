@@ -86,13 +86,14 @@ class EmailExtractor:
                 pass
 
     def extract_emails_from_file(self):
+
         file_path = input("Enter file path: ")
         try:
             with open(file_path, "r") as file:
                 urls = file.read().splitlines()
                 for url in urls:
                     self.extract_emails_from_url(url)
-        except FileNotFoundError:
+        except FileNotFoundError or IsADirectoryError:
             print(f"File not found: {file_path}")
 
 
