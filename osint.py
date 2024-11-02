@@ -249,7 +249,8 @@ def execute_command(choice):
         email.extract_emails_from_url(url)
         press_enter_to_continue()
     elif choice == '3':
-        EmailExtractor.extract_emails_from_file()
+        email = EmailExtractor()
+        email.extract_emails_from_file()
     elif choice == '4':
         get_whois()
         press_enter_to_continue()
