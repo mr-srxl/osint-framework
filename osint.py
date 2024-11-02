@@ -13,6 +13,13 @@ from colorama import Fore
 from phonenumbers import geocoder, carrier, timezone
 from pystyle import Colors, Colorate
 from pystyle import Write, Center
+import signal
+
+
+def signal_handler(sig, frame):
+  print("\nGoodbye!")
+  exit(0)
+signal.signal(signal.SIGINT, signal_handler)
 
 
 def get_phone_number_info(phone_number):
@@ -190,11 +197,15 @@ def get_exif(filename):
 
 def pdf_metadate():
     pdf = Write.Input("Path: ", Colors.green, interval=0)
-    reader = PdfReader(pdf)
-    meta = reader.metadata
-    print("File MEtadata:")
-    for i in meta.keys():
-        Write.Print(f"\t{i}: {meta[i]}", Colors.blue_to_purple, interval=0.00000000000000000000000000001, end="\n")
+    try:
+     reader = PdfReader(pdf)
+     meta = reader.metadata
+     print("File MEtadata:")
+     for i in meta.keys():
+         Write.Print(f"\t{i}: {meta[i]}", Colors.blue_to_purple, interval=0.00000000000000000000000000001, end="\n")
+    except IsADirectoryError:
+         Write.Print("it\'s not a file",Colors.red)
+
 
 
 def clear():
@@ -270,7 +281,10 @@ def execute_command(choice):
 
 
 while True:
-    Write.Print(banner, Colors.white, interval=0)
-    command = input('\nmr.pwd> ')
-
-    execute_command(command)
+    try:
+     Write.Print(banner, Colors.white, interval=0)
+     command = input('\nmr.pwd> ')
+     execute_command(command)
+    except KeyboardInterrupt:
+        print("\nGoodbye!")
+        break
