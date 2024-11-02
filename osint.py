@@ -264,9 +264,13 @@ def execute_command(choice):
     elif choice == '7':
         pdf_metadate()
         press_enter_to_continue()
+    else:
+        print("wrong!")
+        press_enter_to_continue()
 
 
 while True:
-    Write.Print(Center.XCenter(banner), Colors.white, interval=0)
+    Write.Print(banner, Colors.white, interval=0)
     command = input('\nmr.pwd> ')
+
     execute_command(command)
